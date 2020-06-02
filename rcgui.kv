@@ -1,0 +1,396 @@
+#: import MDLabel kivymd.label.MDLabel
+#: import MDTextField kivymd.textfields.MDTextField
+#: import MDRaisedButton kivymd.button.MDRaisedButton
+#: import MDIconButton kivymd.button.MDIconButton
+#: import MDDropdownMenu kivymd.menus.MDDropdownMenu
+#: import MDNavigationDrawer kivymd.navigationdrawer.MDNavigationDrawer
+#: import NavigationLayout kivymd.navigationdrawer.NavigationLayout
+#: import NavigationDrawerDivider kivymd.navigationdrawer.NavigationDrawerDivider
+#: import NavigationDrawerToolbar kivymd.navigationdrawer.NavigationDrawerToolbar
+#: import NavigationDrawerSubheader kivymd.navigationdrawer.NavigationDrawerSubheader
+#: import MDAccordion kivymd.accordion.MDAccordion
+#: import MDAccordionItem kivymd.accordion.MDAccordionItem
+#: import Toolbar kivymd.toolbar.Toolbar
+#: import md_icons kivymd.icon_definitions.md_icons
+
+<MyButton@MDRaisedButton>:
+        text_size: self.size * 3
+        theme_text_color: 'Custom'
+        text_color: (.051,.596,.729,1)
+        font_size: 25
+        #content.texture_size[0]
+        width: dp(15)
+        font_name: 'D:\DOCUMENTS\Coding\Python\Anaconda\Lib\site-packages\kivymd/fonts/Roboto-MediumItalic'
+        md_bg_color: (0,0,.7, .05)
+#        canvas.before:
+#               Color:
+#                        rgba: (0,0,0,1)
+#                Line:
+#                        width: 0.5
+#                        rectangle: (self.x, self.y, self.width, self.height)
+        
+
+<MyLabel@MDLabel>:
+        theme_text_color: 'Custom'
+        color: (.051,.596,.729,1)
+        font_size: 20
+        font_name: 'D:\DOCUMENTS\Coding\Python\Anaconda\Lib\site-packages\kivymd/fonts/Roboto-Medium'
+
+<MyText@MDTextField>:
+        
+        theme_text_color: 'Custom'
+        line_color_normal: (1,0,0,1)
+        line_color_focused: (0,1,1,1)
+        font_size: 25
+        font_name: 'D:\DOCUMENTS\Coding\Python\Anaconda\Lib\site-packages\kivymd/fonts\Roboto-MediumItalic'
+        
+
+<IntroPage>:
+
+        BoxLayout:
+
+                orientation: "vertical"
+
+                BoxLayout:
+                        orientation: "vertical"
+                        size_hint_y: 0.20
+
+                        MyButton:
+                                theme_text_color: 'Custom'
+                                text: "NEW JOB"
+                                size_hint: (1, 0.5)
+                                on_release:
+                                        root.manager.transition.direction = "up"
+                                        root.manager.transition.duration = .8
+                                        root.manager.current = "new_job_page"
+                                        root.checkLoaded()
+                        MyButton:
+                                theme_text_color: 'Custom'
+                                size_hint: (1, 0.5)
+                                text: "OPEN JOB"
+                                on_release: root.openJob()
+
+<NewJobPage>:
+        
+        
+        ipm_label: ipm_name_label
+        ipm_icon: ipm_name_icon
+        pole_header: pole_col
+        cd_header: cd_col
+        conductor_header: conductor_col
+        ipm_header: ipm_col
+
+        BoxLayout:
+
+                orientation: "vertical"
+
+                BoxLayout:
+
+                        orientation: "horizontal"
+                        size_hint: (1, .05)
+                        spacing: 5
+                        padding: 10
+
+                        
+                                        
+                        MDIconButton:
+                                id: ipm_name_icon
+                                icon: 'book-open-page-variant'
+                                size_hint: (.05, 1)
+                                halign: 'left'
+                                on_release:
+                                        color: (.051,.596,.729,1)
+                                        root.ipm_icon.color: (.051,.596,.729,1)
+                                        root.newJob()
+                                        
+                        MyLabel:
+                                id: ipm_name_label 
+                                text: "Load IPM"
+                                font_name: 'D:\DOCUMENTS\Coding\Python\Anaconda\Lib\site-packages\kivymd/fonts/Roboto-MediumItalic'
+                                font_size: 15
+                                theme_text_color: 'Custom'
+                                color: (.051,.596,.729,1)
+
+                BoxLayout:
+
+                        orientation: "vertical"
+                        size_hint: (1, .25)
+
+                        MyLabel:
+                                text: " Enter your IPM, Pole, CD# and Conductor column names below:"
+                                pos_hint: {'bottom': 1}
+                                halign: 'center'
+                                underline: True
+
+                        BoxLayout:
+                                orientation: "horizontal"
+                                spacing: 30
+                                padding: 10
+                                size_hint: (1, 0.10)
+
+                                MyText:
+                                        id: ipm_col
+                                        hint_text: "IPM Column Name:"
+                                        on_focus:
+                                                root.changeToGreen(self)
+                                
+                                MyText:
+                                        id: pole_col
+                                        hint_text: "POLE Column Name:"
+                                        on_focus:
+                                                root.changeToGreen(self)
+
+                                MyText:
+                                        id: cd_col
+                                        hint_text: "CD# Column Name:"
+                                        on_focus:
+                                                root.changeToGreen(self)
+                                
+                                MyText:
+                                        id: conductor_col
+                                        hint_text: "CONDUCTOR Column Name:"
+                                        on_focus:
+                                                root.changeToGreen(self)
+
+                BoxLayout:
+                        orientation: "horizontal"
+                        size_hint: (1, .20)
+
+                        MyButton:
+                                text: "RETRIEVE"
+                                size_hint: (.33, .33)
+                                
+                                on_release:
+                                        root.retrieve()
+                                        root.manager.transition.direction = "left"
+                                        root.manager.transition.duration = .8
+                                        root.manager.current = "ipm_confirm_page"
+<IPMConfirmPage>:
+        grid: grid
+        main_layout: main_layout
+        GridLayout:
+                cols: 1
+                size_hint_x: 1
+                spacing: 10
+                id: main_layout
+                grid: grid
+
+                MyButton:
+                        text: "ESTIMATE"
+                        size_hint: (1, 0.1)
+                        on_release:
+                                root.estimate()
+                                root.manager.transition.direction = "left"
+                                root.manager.transition.duration = .8
+                                root.manager.current = "result_pages"
+
+                ScrollView:
+                        
+                        ScrollGrid:
+                                row_force_default: True
+                                row_default_height: 40
+                                cols: 3
+                                id: grid
+                                height: self.minimum_height
+                                size_hint: 1, None
+                                spacing: 50
+                                padding: 30
+
+                                MyLabel:
+                                        text: "IPM"
+                                MyLabel:
+                                        text: "CD#"
+                                MyLabel:
+                                        text: "CONDUCTOR"
+                                        
+                                        
+<OpenJobPage>:
+        
+        
+
+
+<ResultPages>:
+        
+        grid: Grid
+                
+        GridLayout:
+                cols: 1
+                size_hint_x: 1
+                spacing: 10
+                id: main_grid
+                        
+                BoxLayout:
+                        
+                        orientation: 'vertical'
+                        
+        
+                        BoxLayout:
+                                size_hint: (1, 0.1)
+                                padding: 30
+                                
+                                MyLabel:
+                                        text: "IPM"
+                                MyLabel:
+                                        text: "QUANTITY"
+                        
+                        ScrollView:
+                                
+                                GridLayout:
+                                        row_force_default: True
+                                        row_default_height: 40
+                                        id: Grid
+                                        cols: 2
+                                        height: self.minimum_height
+                                        size_hint: 1, None
+                                        spacing: 50
+                                        padding: 30
+
+
+<Navigator>:
+        nav_layout: nav_layout
+        toolbar: toolbar        
+        
+        Toolbar:   
+                size_hint_y: .07
+                id: toolbar
+                md_bg_color: app.theme_cls.primary_color
+                background_palette: 'Primary'
+                background_hue: '500'
+                left_action_items: [['menu', lambda x: root.nav_layout.toggle_nav_drawer()]]
+                right_action_items: [['dots-vertical', lambda x: root.buildOptionsMenu()]]
+                                        
+        NavigationLayout:
+                id: nav_layout
+                
+                
+                MDNavigationDrawer:
+                        id: nav_drawer_right
+                        NavigationDrawerToolbar:
+                                title: "Actions"
+                                
+                        MDAccordion:
+                                
+                                size_hint_y: 1
+                                
+                                orientation: 'vertical'
+                                
+                                MDAccordionItem:
+                                        title: "Segment"
+                                        pos_hint: {'top': 1}
+                                        orientation: 'vertical'
+                                        collapse: True
+                                        
+                                        ScrollView:
+                                                
+                                                GridLayout:
+                                                
+                                                        pos_hint: {'left': 1}
+                                                        
+                                                        row_force_default: True
+                                                        row_default_height: 40
+                                                        cols: 1
+                                                        height: self.minimum_height
+                                                        size_hint: 1, None 
+                                                        
+                                                        orientation: 'vertical'
+                                                        MDFlatButton:
+                                                                icon: 'checkbox-blank-circle'
+                                                                text: "Direct Costs"
+                                                        MDFlatButton:
+                                                                icon: 'checkbox-blank-circle'
+                                                                text: "Direct Labour"
+                                                        MDFlatButton:
+                                                                icon: 'checkbox-blank-circle'
+                                                                text: "Crew Types"
+                                                        MDFlatButton:
+                                                                icon: 'checkbox-blank-circle'
+                                                                text: "Asset Allocation"
+                                                        
+                                MDAccordionItem:
+                                        id: filler
+                                        collapse: True
+                                        title: "Report"
+                                        
+                                        ScrollView:
+                                        
+                                                GridLayout:
+                                                        
+                                                        row_force_default: True
+                                                        row_default_height: 40
+                                                        cols: 1
+                                                        height: self.minimum_height
+                                                        size_hint: 1, None 
+                                                
+                                                        MDFlatButton:
+                                                                icon: 'checkbox-blank-circle'
+                                                                text: "Tasks"
+                                                        MDFlatButton:
+                                                                text: "Calculate"
+                                                        MDFlatButton:
+                                                                text: "View/Print"
+        
+
+                              
+<LoadDialog>:
+        
+        chooserlayout: chooserlayout
+        BoxLayout:
+                id: chooserlayout
+                loadchooser: loadchooser
+                size: root.size
+                pos: root.pos
+                orientation: "vertical"
+                FileChooserIconView:
+                        id: loadchooser
+                BoxLayout:
+                        size_hint_y: None
+                        height: 30
+                        MyButton:
+                                md_bg_color: (0,0,0.4,1)
+                                text: "Cancel"
+                                on_release: root.cancel()
+                        
+                        MyButton:
+                                md_bg_color: (0,0,0.4,1)
+                                text: "Load"
+                                on_release: root.load(filechooser.path, filechooser.selection)
+                                
+<SaveDialog>:
+    
+        chooserlayout: chooserlayout
+        text_input: text_input
+        BoxLayout:
+                id:chooserlayout
+                savechooser: savechooser
+                size: root.size
+                pos: root.pos
+                orientation: "vertical"
+                
+                
+                FileChooserListView:
+                        id: savechooser
+                        patD: "D:\\Python\\RUCES AUTO\\Saves"
+                        on_selection: text_input.text = self.selection and self.selection[0] or ''
+
+                MyText:
+                        id: text_input
+                        size_hint_y: None
+                        multiline: False
+                        hint_text: "Enter filename:"
+                        hint_lbl_text_color: (.7,.7,.7,1)
+                        foreground_color: (1,1,1,1)
+                        line_color_normal: (1,1,1,1)
+                        line_color_focused: (0,1,1,1)
+                        pos_hint_y: {'bottom': 1}
+                        height: 30
+
+        BoxLayout:
+                size_hint_y: None
+                height: 30
+                Button:
+                        text: "Cancel"
+                        on_release: root.cancel()
+
+                Button:
+                        text: "Save"
+                        on_release: root.save(savechooser.path, text_input.text)
