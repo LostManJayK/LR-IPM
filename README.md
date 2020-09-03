@@ -4,6 +4,6 @@ A cost estimation application designed for Manitoba Hydro's LR/IPM jobs. The goa
 To use:
 
 1. Install kivy (min version 1.11.1), kivymd, and openpyxl.
-2. Replace these packages with the corresponding packages of the same name provided in the 'Additional Required Items' folder
+2. Replace these packages with the corresponding packages of the same name included in the repository
 3. Ensure all preinstalled python packages are up to date
 4. Make sure 'Ruces_Companion_New_Format.py' 'Ruces_Comapanion_GUI.py' and rcgui.kv are in the same folder
